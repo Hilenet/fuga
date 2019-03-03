@@ -1,0 +1,31 @@
+# PRODUCTION CONF
+version: "3"
+services:
+  collector:
+    # volumesが引き継がれているようなら手立てが必要
+    build:
+      context: .
+      dockerfile: src/collector/Dockerfile.production
+    env_file:
+      - ./env/production/db.env
+      - ./env/production/writer.env
+      - ./cred/production/slack.env
+    environment:
+      - PROD_MODE=production
+    tty: false
+    stdin_open: false
+
+  db:
+    environment:
+      - PROD_MODE=production
+
+#  web:
+#    env_files:
+#      - ./env/production/db.env
+#      - ./env/production/reader.env
+#    environment:
+#      - PROD_MODE=production
+#    entrypoint: bash #as: rails
+#    tty: false
+#    stdin_open: false
+

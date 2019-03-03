@@ -1,0 +1,5 @@
+env/*/*.env
+cred/*/*.env
+db/*
+
+!.gitkeep

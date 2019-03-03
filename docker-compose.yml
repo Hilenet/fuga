@@ -1,0 +1,46 @@
+# DEVELOPMENT CONF
+version: "3"
+services:
+  collector:
+    container_name: collector
+    build:
+      context: .
+      dockerfile: src/collector/Dockerfile.development
+    env_file:
+      - ./env/development/db.env
+      - ./env/development/writer.env
+      - ./cred/development/slack.env
+    environment:
+      - PROD_MODE=development
+    volumes:
+      - ./src/collector:/go/src/collector
+    working_dir: /go/src/collector
+    tty: true
+    stdin_open: true
+
+  db:
+    container_name: db
+    image: mariadb
+    expose:
+      - 3306
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - PROD_MODE=development
+    volumes:
+      - ./sql/init:/docker-entrypoint-initdb.d
+      - ./db:/var/lib/mysql
+
+#  web:
+#    container_name: web
+#    image: ruby
+#    env_files:
+#      - ./env/development/db.env
+#      - ./env/development/reader.env
+#    environment:
+#      - PROD_MODE=development
+#    volumes:
+#      - ./src/web:/work
+#    entrypoint: bash
+#    tty: true
+#    stdin_open: true
+
