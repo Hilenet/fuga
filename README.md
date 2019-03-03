@@ -14,7 +14,7 @@ webはまあ後でいいじゃろ・・・(開発放置)
 
 
 ## usage
-知らん．
+1. `run.sh`
 
 
 ## component(services)
